@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ProductsService } from '../../services/products';
 import { INewProductRequest } from '../../interfaces/new-product-request';
 import { take } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-product',
@@ -22,6 +23,7 @@ export class NewProduct {
   });
 
   private readonly _productsService = inject(ProductsService);
+  private readonly _router = inject(Router);
 
   saveProduct() {
     if (this.productForm.invalid || !this.productImageBase64) return;
@@ -45,6 +47,10 @@ export class NewProduct {
           console.error('Erro ao salvar o produto:', error);
         },
       });
+  }
+
+  cancel() {
+    this._router.navigate(['/products']);
   }
 
   onFileSelected(event: any) {
